@@ -16,15 +16,25 @@ Project is created with:
 ## Dependencies Intall and Setup
 
 Install express: `$ npm install express --save`
+
 Install mongoose: `$ npm install mongoose --save`
+
 Install morgan: `$ npm i morgan`
+
 Install ejs(Embedded JavaScript templates): `$ npm install ejs`
+
 Install bcrypt: `npm i bcrypt`
+
 Install express-session: `$ npm i express-session`
+
 Install express-validator: `$ npm i express-validator`
+
 Install nodemon: `$ npm i nodemon`
+
 Install connect-mongodb-session : `npm i connect-mongodb-session`
+
 Instal connect-flash : `npm i connect-flash`
+
 
 	
 ## Run
