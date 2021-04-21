@@ -32,11 +32,14 @@
 *.app
 
 # JSON file
+
 * .json
 
 # Directory
 /node_modules/*
 /.vscode/*
 
+
 # File
 /app.js
+/middleware/middleware.js

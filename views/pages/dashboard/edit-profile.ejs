@@ -1,0 +1,266 @@
+<%- include("../../partials/head.ejs") %>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css"> 
+
+<div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+
+            </div>
+            <div class="col-md-8 ">
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <div class="card card-body my-2">
+                            <h4>
+                                <%= title %>
+                            </h4>
+                            <div class="profile-pics">
+                                
+                                <img src="<%= user.profilePics %>" class="img-rounded" alt="Cinque Terre" width="230" height="230"
+                                    id="profilePics"> 
+                                <form action="/uploads/profilePics" class="my-2" id="profilePicsForm">
+                                    <input type="file" name="profilePics" id="profilePicsFile" accept="image/*">
+                                    
+                                    <input type="button" value="Remove Pics" id="removeProfilePics"
+                                        style="display: <%= user.profilePics.includes('default.jpg') ? 'none' : 'block' %>"
+                                        class="btn btn-danger btn-sm my-2">
+
+                                </form>
+                            </div>
+
+                            <div>
+                                <form action="/dashboard/edit-profile" method="POST">
+                                    <div class="form-group">
+                                        <label for="name">Enter Your Name</label>
+                                        <input 
+                                        type="text" 
+                                        class="form-control <%= error.name ? 'is-invalid' : ' '%> "
+                                        name="name" 
+                                        id="name"
+                                        value="<%= profile.name %>"
+                                        placeholder="Enter your name">
+                                        <div class="invalid-feedback">
+                                            <%= error.name %>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Enter Your Email</label>
+                                        <input type="email" class="form-control" name="email" id="email"
+                                            placeholder="Enter your email" value="<%= user.email %>" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="title">Enter A short title</label>
+                                        <input type="text" 
+                                        class="form-control <%= error.title ? 'is-invalid' : ' '%> " 
+                                        name="title" 
+                                        id="title"
+                                        value="<%= profile.title %>"
+                                        placeholder="Enter a short title">
+                                        <div class="invalid-feedback">
+                                            <%= error.title %>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="bio">Enter a short Bio</label>
+                                        <textarea class="form-control <%= error.bio ? 'is-invalid' : ' '%> "
+                                        name="bio" id="bio"><%= profile.bio %></textarea>
+                                        <div class="invalid-feedback">
+                                            <%= error.bio %>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="lead">Your Social Links</p>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="fab fa-internet-explorer"></i>
+                                                </span>
+                                            </div>
+                                            <input type="text" 
+                                            class="form-control <%= error.website ? 'is-invalid' : ' '%> "
+                                            placeholder="website Link"
+                                            value="<%= profile.links.website %>"
+                                            name="website">
+                                            <div class="invalid-feedback">
+                                                <%= error.website %>
+                                            </div>
+                                        </div>
+
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="fab fa-facebook-square"></i>
+                                                </span>
+                                            </div>
+                                            <input type="text" 
+                                            class="form-control <%= error.facebook ? 'is-invalid' : ' '%> " 
+                                            placeholder="Facebook Link"
+                                            value="<%= profile.links.facebook %>"
+                                            name="facebook">
+                                                <div class="invalid-feedback">
+                                                    <%= error.facebook %>
+                                                </div>
+                                        </div>
+
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="fa fa-linkedin"></i>
+                                                </span>
+                                            </div>
+                                            <input type="text" 
+                                            class="form-control <%= error.linkedin ? 'is-invalid' : ' '%> " 
+                                            placeholder="LinkedIn Link"
+                                            value="<%= profile.links.linkedin %>"
+                                            name="linkedin">
+                                            <div class="invalid-feedback">
+                                                <%= error.linkedin %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="submit" class="btn btn-primary" value="Update Profile">
+                                </form>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="modal fade bd-example-modal-lg" id="crop-modal" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Resize Your Picture</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="cropped-image"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancel-cropping">Close</button>
+                        <button type="button" class="btn btn-primary" id="uploadimage">Change Pic</button>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+<%- include("../../partials/footer.ejs") %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.min.js"></script>
+<!-- <script src="scripts/profilePicUpload.js"></script> -->
+
+<script>
+    
+window.onload = function () {
+    let baseCropping = $('#cropped-image').croppie({
+        viewport: {
+            width:200,
+            height:200
+        },
+        boundary: {
+            width:300,
+            height:300 
+        },
+        showZoomer: true,
+        enableOrientation: true
+    })
+
+    function readableFile(file) {
+        let reader = new FileReader()
+        reader.onload = function(event){
+            baseCropping.croppie('bind' , {
+                url:event.target.result
+            }).then(() => {
+                $('.cr-slider').attr({
+                    'min': 0.1000,
+                    'max': 1.5000
+                })
+            })
+        }
+        reader.readAsDataURL(file)
+    }
+    
+    $('#profilePicsFile').on('change' , function(e) {
+        if(this.files[0]) {
+            readableFile(this.files[0])
+            $('#crop-modal').modal({
+                backdrop: 'static',
+                keyboard: false
+            })
+        }
+    })
+
+       
+    // $('#cancel-cropping').on('click' , function() {
+    //      $('#crop-modal').modal('hide')
+    //      setTimeout(() => {
+    //          baseCropping.croppie('destroy')
+    //      }, 1000)
+    // })
+
+
+    $("#uploadimage").on('click' , function() {
+        
+        baseCropping.croppie('result' , 'blob')
+            .then(blob => {
+                let formData = new FormData()
+                let file = document.getElementById('profilePicsFile').files[0]
+                let name = generateFileName(file.name)
+            
+                formData.append('profilePics' , blob , name)
+
+                let headers = new Headers()
+                headers.append('Accept' , 'Application/JSON')
+            
+                let req = new Request('/uploads/profilePics' , {
+                    method: 'POST',
+                    headers,
+                    mode: 'cors',
+                    body: formData
+                })
+                return fetch(req)
+            })
+            .then(res => {
+                res.json()
+            })
+            .then(data => {
+                
+                document.getElementById('removeProfilePics').style.display = 'block'
+                document.getElementById('profilePics').src = data.profilePics
+                document.getElementById('profilePicsForm').requestFullscreen()
+
+                
+                $('#crop-modal').modal('hide')
+                setTimeout(() => {
+                    baseCropping.croppie('destroy')
+                }, 1000)
+            })
+    })
+
+ 
+}
+
+
+function generateFileName(name){
+    const types = /(.jpeg|.jpg|.png|.gif)/
+    return name.replace(types , '.png')
+}
+
+
+
+</script>
+
+    </body>
+
+    </html>

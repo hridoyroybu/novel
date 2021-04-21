@@ -36,7 +36,7 @@ exports.signupPostController = (req, res, next) => {
         user.save()
         
         .then(result => {
-            req.flash('success' , 'Successfully create new account') 
+            req.flash('success' , 'Successfully created new account') 
             res.render('pages/auth/login' , {title: 'Create A New Account', error:{} , value:{}, flashMessage:Flash.getMessage(req)})
         })
         .catch(err => {
@@ -51,29 +51,30 @@ exports.loginGetController = (req, res, next) => {
 }
 exports.loginPostController = async (req, res, next) => {
     
-    let errors = validationResult(req).formatWith(errorFormater)
     let {email , password} = req.body
-
+    let user = await User.findOne({email})
     try{
 
         let errors = validationResult(req).formatWith(errorFormater)
 
         if(!errors.isEmpty()){
             return res.render('pages/auth/login' , {
-                title: 'Create A New Account' , 
+                title: 'Login To Account' , 
                 error: errors.mapped(),
-                value: req.body,
+                value: user,
                 flashMessage:Flash.getMessage(req)
             })
         }
+
         req.session.isLoggedIn = true
-        req.session.user = req.body
+        req.session.user = user
         req.session.save(err => {
             if(err){
                 console.log(err)
                 return next(err)
             }
             req.flash('success' , 'Successfully LoggedIn')
+            //console.log(req.body)
             return res.redirect('/dashboard')
         })
         

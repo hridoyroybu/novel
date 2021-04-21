@@ -8,7 +8,7 @@ const setMiddleare = require('./middleware/middleware')
 const setRoutes = require('./routes/routes')
 
 
-const MONGDB_URI = 'mongodb+srv://<username>:<password>@cluster0.p5olu.mongodb.net/<database-name>?retryWrites=true&w=majority'
+const MONGDB_URI = 'mongodb+srv://hridoyroy:pass@cluster0.p5olu.mongodb.net/novel-db?retryWrites=true&w=majority'
 
 // Setup View Engine
 app.set('view engine' , 'ejs')
@@ -19,6 +19,7 @@ setMiddleare(app)
 
 // using routes from route directory
 setRoutes(app)
+
 
 app.use((req, res, next) => {
     let error = new Error('404 Not Found')

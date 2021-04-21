@@ -1,0 +1,57 @@
+body {
+  background: black; }
+
+@media (max-width: 767px) {
+  #showboxes {
+    margin: 0px; } }
+
+.navbar {
+  box-shadow: 2px 2px 5px #3292a6;
+  background: black;
+  opacity: 0.9; }
+  .navbar .nav-item {
+    font-size: 1.1rem;
+    padding-right: 20px; }
+  .navbar .nav-item:last-child {
+    padding-right: 0; }
+
+#showboxes {
+  background: #22252A; }
+
+.circle-img {
+  width: 140px;
+  height: 120px; }
+
+#about {
+  background: black; }
+  #about .card {
+    background: #22252A; }
+  #about .card-header {
+    box-shadow: 0 8px 6px -6px black; }
+  #about img {
+    margin-top: -60px; }
+  #about .card:hover {
+    background: #3292a6;
+    color: #ffffff; }
+    #about .card:hover .fa {
+      color: #ffffff; }
+  #about .fa {
+    font-size: 25px; }
+
+#asset {
+  background: black; }
+  #asset .card {
+    background: #22252A; }
+  #asset .card-header {
+    box-shadow: 0 8px 6px -6px black; }
+
+#memory {
+  background: black; }
+  #memory .card {
+    background: #22252A; }
+
+#contact {
+  background: black; }
+
+#footer-main {
+  background: black; }

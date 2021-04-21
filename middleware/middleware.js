@@ -8,7 +8,7 @@ const flash = require('connect-flash');
 const {bindUserWithRequest} = require('./authMiddleWare')
 const setLocals = require('./setLocals')
 
-const MONGDB_URI = 'mongodb+srv://<username>:<password>@cluster0.p5olu.mongodb.net/<database-name>?retryWrites=true&w=majority'
+const MONGDB_URI = 'mongodb+srv://hridoyroy:pass@cluster0.p5olu.mongodb.net/novel-db?retryWrites=true&w=majority'
 
 const store = new MongoDBStore({
     uri: MONGDB_URI,
